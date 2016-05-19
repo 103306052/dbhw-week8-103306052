@@ -16,7 +16,7 @@ Article.getAll = function(cb) {
       return new Article({
         id : row.id,
         title : row.title,
-        memberId : row.member_id, //這邊剛剛忘記修正了
+        memberId : row.member_id, 
         content : row.content,
         createdAt : row.createdAt
       });
@@ -39,7 +39,7 @@ Article.get = function(articleId, cb) {
       return new Article({
         id : row.id,
         title : row.title,
-        memberId : row.member_id, //這邊剛剛忘記修正了
+        memberId : row.member_id, 
         content : row.content,
         createdAt : row.createdAt
       });

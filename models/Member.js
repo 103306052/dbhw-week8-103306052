@@ -16,7 +16,7 @@ var Member = function(options) {
 
 //Class Function
 Member.get = function(memberId, cb) {
-  //這邊是當傳入一個memberId時，進入資料庫查出相對應的member資料
+
 
   db.select()
     .from('member')
@@ -24,7 +24,7 @@ Member.get = function(memberId, cb) {
       id : memberId
     })
     .map(function(row) {
-      //將select出來的資料轉換成Member物件
+   
 
       return new Member(row);
     })
@@ -32,7 +32,7 @@ Member.get = function(memberId, cb) {
       if(memberList.length) {
         cb(null, memberList[0]);
       } else {
-        //這邊要產生一個NotFound err給前端，因為error很常用到，我們會獨立出去一個檔案
+
         cb(new GeneralErrors.NotFound());
       }
     })
@@ -42,13 +42,11 @@ Member.get = function(memberId, cb) {
 }
 
 
-//我們接下來嘗試是否可以正確取得資料
-//接下來完成其他會用到的function
-//Instance Function
+
 Member.prototype.save = function (cb) {
-  //save的概念是當物件不存在時新增，存在時對DB做更新
+
   if (this.id) {
-    //已存在
+
     db("member")
       .where({
         id : this.id
@@ -66,7 +64,7 @@ Member.prototype.save = function (cb) {
         cb(new GeneralErrors.Database());
       });
   } else {
-    //不存在
+
     db("member")
       .insert({
         name: this.name,
@@ -86,14 +84,12 @@ Member.prototype.save = function (cb) {
 };
 
 
-Member.prototype.check = function (cb) { //with check
-
-  //if (this.account && this.password) { //find acc,password
+Member.prototype.check = function (cb) {
 
     db("member")
       .where({
         account : this.account,
-        password : this.password //with ,
+        password : this.password 
       }).map(function(row) {
 
           this.name = row.name;
@@ -104,15 +100,13 @@ Member.prototype.check = function (cb) { //with check
       })
       .then(function(result) {
 
-      //  console.log('tance'+typeof result);
-        //if(result!=null)
+
         console.log('re'+result);
         var name = result;
         console.log('name'+name);
         this.name = name;
         console.log(this.name);
         cb(null, this);
-        //console.log('b'+typeof this.name);
 
       }.bind(this))
       .catch(function(err) {
@@ -122,5 +116,5 @@ Member.prototype.check = function (cb) { //with check
 //}
 };
 
-//這樣基本上就完成了一個DataModel會用到的method, 之後有需要的時候再過來新增
+
 module.exports = Member;
